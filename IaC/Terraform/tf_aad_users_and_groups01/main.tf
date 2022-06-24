@@ -16,15 +16,13 @@ resource "azuread_user" "user" {
 }
 
 
-#resource "azuread_group" "group" {
-#  display_name     = "tf_group01"
-#  security_enabled = true
-#}
+resource "azuread_group" "group" {
+  display_name     = "tf_group01"
+  security_enabled = true
+}
 
 
-#resource "azuread_group_member" "group_member" {
-#  group_object_id  = azuread_group.group.id
-#  member_object_id = azuread_user.user.id
-#}
-
-
+resource "azuread_group_member" "group_member" {
+  group_object_id  = azuread_group.group.id
+  member_object_id = azuread_user.user.id
+}
