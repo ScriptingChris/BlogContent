@@ -1,13 +1,13 @@
 Vagrant.configure("2") do |config|
 
-    config.vm.define "lab-dc01", primary: true do |lab-dc01|
-        lab-dc01.vm.box = "gusztavvargadr/windows-server-2022-standard-core" #"gusztavvargadr/windows-server"
-        lab-dc01.vm.network "public_network", bridge: "External Switch"
-        lab-dc01.vm.provider "hyperv"
-        lab-dc01.vm.hostname = "lab-dc01"
-        lab-dc01.vm.synced_folder '.', '/vagrant', disabled: true
+    config.vm.define "lab-dc01", primary: true do |dc01|
+        dc01.vm.box = "gusztavvargadr/windows-server-2022-standard-core" #"gusztavvargadr/windows-server"
+        dc01.vm.network "public_network", bridge: "External Switch"
+        dc01.vm.provider "hyperv"
+        dc01.vm.hostname = "lab-dc01"
+        dc01.vm.synced_folder '.', '/vagrant', disabled: true
 
-        srv01.vm.provider "hyperv" do |h|
+        dc01.vm.provider "hyperv" do |h|
             h.enable_virtualization_extensions = false
             h.linked_clone = false
             h.cpus = 2
@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
             # h.vlan_id = "100"
         end
 
-        srv01.vm.provision "ansible" do |ansible|
+        dc01.vm.provision "ansible" do |ansible|
             ansible.verbose = "v"
             ansible.playbook = "playbook.yml"
         end
